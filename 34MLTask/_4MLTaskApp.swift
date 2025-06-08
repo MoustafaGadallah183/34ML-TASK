@@ -9,9 +9,16 @@ import SwiftUI
 
 @main
 struct _4MLTaskApp: App {
+    
+    @StateObject private var vm = HomeViewModel()
+
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            HomeView()
+            
         }
+        .environmentObject(vm)
+        
     }
 }
