@@ -8,11 +8,12 @@
 import SwiftUI
 
 struct HomeView: View {
+    
     @EnvironmentObject private var vm: HomeViewModel
     @StateObject private var keyboard = KeyboardResponder()
     @State private var selectedItem: ExperienceModel? = nil
     @FocusState private var isSearchFocused: Bool
-
+    
     var body: some View {
         ScrollView {
             VStack( alignment: .leading,spacing: 0) {
@@ -27,28 +28,22 @@ struct HomeView: View {
                     recommnededView
                         .cornerRadius(10)
                         .transition(.opacity)
-                  
+                    
                 }
-            
-               
                 mostRecentView.ignoresSafeArea()
-               
+                
             }
         }
-     
+        
         .scrollDisabled(!keyboard.isKeyboardVisible)
-
-
-       .animation(.easeOut(duration: 0.25), value: keyboard.isKeyboardVisible)
-      
-   
-       .onChange(of: vm.searchText) { oldValue, newValue in
-           if oldValue != newValue {
-                 Task {
-                     vm.performSearch()
-                 }
-             }
-       }
+        .animation(.easeOut(duration: 0.25), value: keyboard.isKeyboardVisible)
+        .onChange(of: vm.searchText) { oldValue, newValue in
+            if oldValue != newValue {
+                Task {
+                    vm.performSearch()
+                }
+            }
+        }
         
     }
     
@@ -71,7 +66,6 @@ extension HomeView {
                 .font(.subheadline)
                 .lineLimit(4)
                 .fontWeight(.semibold)
-
                 .minimumScaleFactor(0.7)
             
         }
@@ -84,7 +78,6 @@ extension HomeView {
         
         VStack(alignment: .leading) {
             
-           
             Text("RECOMMENDED EXPERIENCES")
                 .font(.headline)
                 .fontWeight(.heavy)
@@ -99,21 +92,21 @@ extension HomeView {
                             vm.selectedExperimentModel = item
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                                 vm.showDetail = true
-                                }
-                    }
-                       
+                            }
+                        }
+                    
                 }
                 
-     
+                
             }
             .cornerRadius(10)
             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
             .frame(height: 250)
             
         }
-
-     
-       
+        
+        
+        
     }
     
     private var mostRecentView: some View {
@@ -138,11 +131,11 @@ extension HomeView {
                             vm.selectedExperimentModel = item
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                                 vm.showDetail = true
-                                }
-                    }
+                            }
+                        }
                 }
                 
-     
+                
             }
             .listStyle(PlainListStyle())
             .cornerRadius(10)
@@ -150,7 +143,7 @@ extension HomeView {
             .padding([.leading, .trailing, .bottom]  , 10)
             .ignoresSafeArea(edges: .bottom)
         }
-       
+        
     }
 }
 

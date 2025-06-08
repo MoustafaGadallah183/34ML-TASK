@@ -50,5 +50,5 @@ struct SearchBarView: View {
         )
         .padding()
     }
-        
+    
 }

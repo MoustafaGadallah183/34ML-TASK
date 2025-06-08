@@ -18,47 +18,77 @@ struct HomeRowView: View {
                 contentMode: .fill,
                 height: 200,
                 experienceModel: experienceModel
-                
             )
             .cornerRadius(10)
             .clipped()
-            .shadow( color: Color.black.opacity(0.4),radius: 4)
-            .padding(10)
-
-            HStack {
-                    Text(experienceModel.title ?? "")
-                        .font(.headline)
-                        .multilineTextAlignment(.leading)
-                        .fontWeight(.bold)
-                        .lineLimit(nil)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding()
-                 
-                HStack(spacing: 3){
-                        Text("\(experienceModel.likesNo ?? 0)")
-                            
-                            .foregroundColor(.black)
-                            .font(.headline)
-                            .fontWeight(.bold)
-                     
-                        Image(systemName: "heart.fill")
-                            .foregroundColor(.orange)
+            .shadow(color: Color.black.opacity(0.4), radius: 4)
+            .overlay(
+                
+                VStack {
+                    HStack {
                         
+                        if experienceModel.recommended == 1 {
+                            HStack(spacing: 4) {
+                                Image(systemName: "star.fill")
+                                    .font(.caption)
+                                    .foregroundColor(.yellow)
+                                
+                                Text("Recommended")
+                                    .font(.caption)
+                                    .fontWeight(.semibold)
+                                    .foregroundColor(.white)
+                            }
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 4)
+                            .background(Color.black.opacity(0.6))
+                            .cornerRadius(12)
+                        }
+                        
+                        Spacer()
+                        
+                        Image(systemName: "info.circle")
+                            .font(.title2)
+                            .foregroundColor(.white)
+                            .clipShape(Circle())
                     }
-               
-            }
-        
-        
-        }  .sheet(isPresented: $vm.showDetail) {
-            if let item = vm.selectedExperimentModel {
-            HomeDetailsView( experienceModel: item)
-            }
+                    .padding(12)
+                    
+                    Spacer()
+                }
+            )
+            .padding(.horizontal, 10)
+            .padding(.top, 10)
             
+            HStack {
+                Text(experienceModel.title ?? "")
+                    .font(.headline)
+                    .multilineTextAlignment(.leading)
+                    .fontWeight(.bold)
+                    .lineLimit(nil)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                
+                HStack(spacing: 3) {
+                    Text("\(experienceModel.likesNo ?? 0)")
+                        .foregroundColor(.black)
+                        .font(.headline)
+                        .fontWeight(.bold)
+                    
+                    Image(systemName: "heart.fill")
+                        .foregroundColor(.orange)
+                        .onTapGesture {
+                            Task {
+                                await vm.likeExperience(experienceModel.id ?? "")
+                            }
+                        }
+                }
+            }
+            .padding(.horizontal, 10)
+            .padding(.bottom, 10)
         }
-    
-   
-    
+        .sheet(isPresented: $vm.showDetail) {
+            if let item = vm.selectedExperimentModel {
+                HomeDetailsView(experienceModel: item)
+            }
+        }
     }
 }
-
-

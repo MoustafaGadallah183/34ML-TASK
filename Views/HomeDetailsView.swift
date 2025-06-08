@@ -9,31 +9,24 @@ import SwiftUI
 import Kingfisher
 
 struct HomeDetailsView: View {
+    
     var experienceModel: ExperienceModel
     @EnvironmentObject var vm: HomeViewModel
     @StateObject private var detailsVM = HomeDetailsViewModel()
-    @State private var isDataLoaded = false
-
+    
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 0) {
-               experienceImageSection
+                experienceImageSection
                 
                 VStack(alignment: .leading, spacing: 20) {
-                    
-        
                     HStack(alignment: .top) {
                         titleSection
-        
                         Spacer()
-                        
                         actionsSection
                     }
-                    
                     Divider()
                     descriptionSection
-                  
-                    
                 }
                 .padding(.horizontal, 20)
                 .padding(.vertical, 20)
@@ -42,17 +35,12 @@ struct HomeDetailsView: View {
         .background(Color(.systemBackground))
         .navigationBarHidden(true)
         .ignoresSafeArea(edges: .top)
-        .task {
-            await loadData()
+        .onAppear {
+         
+            detailsVM.details = experienceModel
+            detailsVM.getExperiencesDetails(experience: experienceModel)
         }
-        .animation(.easeInOut(duration: 0.3), value: isDataLoaded)
-    }
-    
-    private func loadData() async {
-         detailsVM.getExperiencesDetails(experience: vm.selectedExperimentModel)
-        withAnimation(.easeInOut(duration: 0.3)) {
-            isDataLoaded = true
-        }
+        .animation(.easeInOut(duration: 0.3), value: detailsVM.details?.id)
     }
     
     private var experienceImageSection: some View {
@@ -85,20 +73,17 @@ struct HomeDetailsView: View {
                         .fill(Color.gray.opacity(0.3))
                         .frame(width: geo.size.width, height: 400)
                 }
-
-              
+                
                 LinearGradient(
                     colors: [Color.clear, Color.black.opacity(0.4)],
                     startPoint: .top,
                     endPoint: .bottom
                 )
                 .frame(width: geo.size.width, height: 400)
-
-               
+                
                 VStack(spacing: 16) {
-                 
                     Button(action: {
-                      
+                        // Add explore action if needed
                     }) {
                         Text("EXPLORE NOW")
                             .font(.system(size: 16, weight: .bold))
@@ -109,21 +94,20 @@ struct HomeDetailsView: View {
                             .cornerRadius(10)
                             .shadow(color: .black.opacity(0.2), radius: 10, x: 0, y: 4)
                     }
-
+                    
                     HStack {
                         Image(systemName: "eye")
                             .foregroundColor(.white)
                         Text("\(detailsVM.details?.viewsNo ?? 0) views")
                             .foregroundColor(.white)
                             .font(.system(size: 16, weight: .medium))
-
+                        
                         Spacer()
-
+                        
                         Image(systemName: "photo.on.rectangle.angled")
                             .font(.system(size: 18))
                             .foregroundColor(.white)
                             .frame(width: 32, height: 32)
-                
                     }
                 }
                 .padding(.horizontal, 20)
@@ -133,9 +117,7 @@ struct HomeDetailsView: View {
         }
         .frame(height: 400)
     }
-
-
-    // MARK: - Title Section
+    
     private var titleSection: some View {
         VStack(alignment: .leading, spacing: 6) {
             Text(detailsVM.details?.title ?? "")
@@ -152,17 +134,14 @@ struct HomeDetailsView: View {
                 Text(detailsVM.details?.city?.fullname ?? "")
                     .font(.system(size: 16))
                     .foregroundColor(.secondary)
-                    .frame(minHeight: 20) // Reserve minimum height
+                    .frame(minHeight: 20)
                     .redacted(reason: detailsVM.details?.city?.fullname == nil ? .placeholder : [])
-               
             }
         }
     }
     
-    
     private var actionsSection: some View {
         HStack(spacing: 12) {
-            
             Button(action: {
             }) {
                 Image(systemName: "square.and.arrow.up")
@@ -172,8 +151,15 @@ struct HomeDetailsView: View {
             
             HStack(spacing: 4) {
                 Button(action: {
+                    Task {
+                        if let updatedLikes = await vm.likeExperience(experienceModel.id ?? "") {
+                           
+                                detailsVM.details?.likesNo = updatedLikes
+                            vm.updateLocalLikeCount(for: experienceModel.id ?? "", likes: updatedLikes)
+                        }
+                    }
                 }) {
-                    Image(systemName: "heart")
+                    Image(systemName: (detailsVM.details?.likesNo ?? 0) > 0 ? "heart.fill" : "heart")
                         .font(.system(size: 20))
                         .foregroundColor(.orange)
                 }
@@ -204,15 +190,3 @@ struct HomeDetailsView: View {
         }
     }
 }
-
-// MARK: - Preview
-#if DEBUG
-struct HomeDetailsView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            HomeDetailsView(experienceModel: ExperienceModel())
-                .environmentObject(HomeViewModel())
-        }
-    }
-}
-#endif

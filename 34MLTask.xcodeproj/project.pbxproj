@@ -26,6 +26,9 @@
 		70B1A21F2DF50D300085559C /* KeyBoardVisibilty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B1A21E2DF50D260085559C /* KeyBoardVisibilty.swift */; };
 		70B1A2212DF5217A0085559C /* HomeDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B1A2202DF5217A0085559C /* HomeDetailsView.swift */; };
 		70B1A2232DF590C20085559C /* DetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B1A2222DF590B80085559C /* DetailsViewModel.swift */; };
+		70B1A2252DF5DDB60085559C /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B1A2242DF5DDAC0085559C /* UIView.swift */; };
+		70B1A2282DF5E41C0085559C /* CachingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B1A2272DF5E3D60085559C /* CachingManager.swift */; };
+		70B1A22A2DF5EA6D0085559C /* LocalDataUpload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B1A2292DF5EA600085559C /* LocalDataUpload.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,7 +53,6 @@
 		703B22462DF495CD00A58482 /* 34MLTaskTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = 34MLTaskTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		703B22502DF495CD00A58482 /* 34MLTaskUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = 34MLTaskUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		703B22642DF496BE00A58482 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
-		703B22652DF4974A00A58482 /* EndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPoint.swift; sourceTree = "<group>"; };
 		703B22672DF498E500A58482 /* BaseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseModel.swift; sourceTree = "<group>"; };
 		703B22692DF49A2100A58482 /* GetExpriencesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetExpriencesService.swift; sourceTree = "<group>"; };
 		703B226B2DF49B3600A58482 /* Decodable+parsing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Decodable+parsing.swift"; sourceTree = "<group>"; };
@@ -66,6 +68,9 @@
 		70B1A21E2DF50D260085559C /* KeyBoardVisibilty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyBoardVisibilty.swift; sourceTree = "<group>"; };
 		70B1A2202DF5217A0085559C /* HomeDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDetailsView.swift; sourceTree = "<group>"; };
 		70B1A2222DF590B80085559C /* DetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewModel.swift; sourceTree = "<group>"; };
+		70B1A2242DF5DDAC0085559C /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
+		70B1A2272DF5E3D60085559C /* CachingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachingManager.swift; sourceTree = "<group>"; };
+		70B1A2292DF5EA600085559C /* LocalDataUpload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDataUpload.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -115,6 +120,7 @@
 		703B222F2DF495CC00A58482 = {
 			isa = PBXGroup;
 			children = (
+				70B1A2262DF5E3C80085559C /* CachingManager */,
 				703B22A62DF4C86A00A58482 /* Components */,
 				703B22752DF4A15300A58482 /* Views */,
 				703B22712DF4A0A500A58482 /* LocalStorage */,
@@ -143,7 +149,6 @@
 		703B22632DF4965C00A58482 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				703B22652DF4974A00A58482 /* EndPoint.swift */,
 				703B22642DF496BE00A58482 /* NetworkManager.swift */,
 			);
 			path = Utilities;
@@ -169,6 +174,7 @@
 		703B226A2DF49B2600A58482 /* Extenstions */ = {
 			isa = PBXGroup;
 			children = (
+				70B1A2242DF5DDAC0085559C /* UIView.swift */,
 				70B1A21A2DF505BE0085559C /* Color.swift */,
 				703B226C2DF49B7200A58482 /* Data.swift */,
 				703B226B2DF49B3600A58482 /* Decodable+parsing.swift */,
@@ -211,6 +217,15 @@
 				703B22A72DF4C88E00A58482 /* RemoteImageView.swift */,
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		70B1A2262DF5E3C80085559C /* CachingManager */ = {
+			isa = PBXGroup;
+			children = (
+				70B1A2292DF5EA600085559C /* LocalDataUpload.swift */,
+				70B1A2272DF5E3D60085559C /* CachingManager.swift */,
+			);
+			path = CachingManager;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -318,7 +333,6 @@
 			mainGroup = 703B222F2DF495CC00A58482;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				703B22A52DF4C4CC00A58482 /* XCRemoteSwiftPackageReference "AlamofireImage" */,
 				70B1A2152DF4DCEA0085559C /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			preferredProjectObjectVersion = 77;
@@ -373,10 +387,13 @@
 				703B22902DF4A83B00A58482 /* HomeViewModel.swift in Sources */,
 				70B1A21B2DF505C10085559C /* Color.swift in Sources */,
 				703B22782DF4A18200A58482 /* HomeView.swift in Sources */,
+				70B1A2282DF5E41C0085559C /* CachingManager.swift in Sources */,
 				70B1A2212DF5217A0085559C /* HomeDetailsView.swift in Sources */,
 				70B1A2192DF5057F0085559C /* SearchBarView.swift in Sources */,
+				70B1A2252DF5DDB60085559C /* UIView.swift in Sources */,
 				70B1A21F2DF50D300085559C /* KeyBoardVisibilty.swift in Sources */,
 				703B228A2DF4A56500A58482 /* HomeRowView.swift in Sources */,
+				70B1A22A2DF5EA6D0085559C /* LocalDataUpload.swift in Sources */,
 				70B1A2232DF590C20085559C /* DetailsViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -739,14 +756,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		703B22A52DF4C4CC00A58482 /* XCRemoteSwiftPackageReference "AlamofireImage" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Alamofire/AlamofireImage";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 4.3.0;
-			};
-		};
 		70B1A2152DF4DCEA0085559C /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher";
