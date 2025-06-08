@@ -88,13 +88,6 @@ extension HomeView {
             TabView {
                 ForEach($vm.recommendedExpeirneces) { $item in
                     HomeRowView(experienceModel: item)
-                        .onTapGesture {
-                            vm.selectedExperimentModel = item
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                                vm.showDetail = true
-                            }
-                        }
-                    
                 }
                 
                 
@@ -122,17 +115,13 @@ extension HomeView {
             }
             
             List {
+                
                 ForEach($vm.mostRecentExpeirneces) { $item in
                     HomeRowView(experienceModel: item)
                         .padding(.vertical, 20)
                         .listRowSeparator(.hidden)
                         .listRowInsets(EdgeInsets())
-                        .onTapGesture {
-                            vm.selectedExperimentModel = item
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                                vm.showDetail = true
-                            }
-                        }
+                  
                 }
                 
                 

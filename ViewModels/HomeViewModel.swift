@@ -7,16 +7,13 @@
 
 import Foundation
 import Combine
-
-import Foundation
-import Combine
 import Network
 
 class HomeViewModel: ObservableObject {
     
     @Published var recommendedExpeirneces: [ExperienceModel] = []
     @Published var mostRecentExpeirneces: [ExperienceModel] = []
-    @Published var selectedExperimentModel: ExperienceModel?
+    @Published var selectedExperimentModel: ExperienceModel? = nil
     @Published var showDetail = false
     @Published var searchText: String = ""
     

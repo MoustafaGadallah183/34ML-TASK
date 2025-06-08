@@ -123,7 +123,6 @@
 				70B1A2262DF5E3C80085559C /* CachingManager */,
 				703B22A62DF4C86A00A58482 /* Components */,
 				703B22752DF4A15300A58482 /* Views */,
-				703B22712DF4A0A500A58482 /* LocalStorage */,
 				703B226E2DF49F5700A58482 /* ViewModels */,
 				703B226A2DF49B2600A58482 /* Extenstions */,
 				703B22682DF49A0B00A58482 /* Services */,
@@ -190,13 +189,6 @@
 				703B228F2DF4A7EE00A58482 /* HomeViewModel.swift */,
 			);
 			path = ViewModels;
-			sourceTree = "<group>";
-		};
-		703B22712DF4A0A500A58482 /* LocalStorage */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = LocalStorage;
 			sourceTree = "<group>";
 		};
 		703B22752DF4A15300A58482 /* Views */ = {

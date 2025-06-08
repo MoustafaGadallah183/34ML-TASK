@@ -32,6 +32,7 @@ struct HomeDetailsView: View {
                 .padding(.vertical, 20)
             }
         }
+        
         .background(Color(.systemBackground))
         .navigationBarHidden(true)
         .ignoresSafeArea(edges: .top)
@@ -83,7 +84,6 @@ struct HomeDetailsView: View {
                 
                 VStack(spacing: 16) {
                     Button(action: {
-                        // Add explore action if needed
                     }) {
                         Text("EXPLORE NOW")
                             .font(.system(size: 16, weight: .bold))
@@ -125,17 +125,19 @@ struct HomeDetailsView: View {
                 .foregroundColor(.primary)
                 .frame(minHeight: 35)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .redacted(reason: detailsVM.details?.title == nil ? .placeholder : [])
+    
             
             HStack(spacing: 6) {
                 Image(systemName: "location")
                     .font(.system(size: 14))
                     .foregroundColor(.secondary)
+                    
                 Text(detailsVM.details?.city?.fullname ?? "")
                     .font(.system(size: 16))
                     .foregroundColor(.secondary)
                     .frame(minHeight: 20)
-                    .redacted(reason: detailsVM.details?.city?.fullname == nil ? .placeholder : [])
+                    .fontWeight(.semibold)
+                
             }
         }
     }
@@ -186,7 +188,7 @@ struct HomeDetailsView: View {
                 .multilineTextAlignment(.leading)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .frame(minHeight: 100)
-                .redacted(reason: detailsVM.details?.description == nil ? .placeholder : [])
+            
         }
     }
 }

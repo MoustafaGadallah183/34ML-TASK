@@ -5,8 +5,13 @@
 //  Created by Moustafa Mohamed Gadallah on 11/12/1446 AH.
 //
 
+
+
+
+import Foundation
+
 // MARK: - ExperienceModel
-struct ExperienceModel: Codable ,Identifiable {
+struct ExperienceModel: Codable ,Identifiable , Equatable {
    
     var id, title: String?
     var coverPhoto: String?
@@ -24,17 +29,15 @@ struct ExperienceModel: Codable ,Identifiable {
     var city : City?
     
     
-    
-    
 }
 
 // MARK: - TicketPrice
-struct TicketPrice: Codable {
+struct TicketPrice: Codable , Equatable {
     var type: String?
     var price: Int?
 }
 
-struct City: Codable {
+struct City: Codable , Equatable {
     var id: Int?
     var name: String?
      
