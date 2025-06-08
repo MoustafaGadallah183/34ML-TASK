@@ -14,6 +14,8 @@ class HomeViewModel: ObservableObject {
     @Published var recommendedExpeirneces: [ExperienceModel] = []
     @Published var mostRecentExpeirneces: [ExperienceModel] = []
     @Published var selectedExperimentModel: ExperienceModel? = nil
+    @Published var likesCount: Int = 0
+
     @Published var showDetail = false
     @Published var searchText: String = ""
     
@@ -147,4 +149,9 @@ class HomeViewModel: ObservableObject {
         ExperienceCacheManager.shared.saveRecommended(recommendedExpeirneces)
         ExperienceCacheManager.shared.saveRecent(mostRecentExpeirneces)
     }
+    
+    // for unit test
+    func likeExperience() {
+           likesCount += 1
+       }
 }
