@@ -43,13 +43,11 @@ struct HomeView: View {
       
    
        .onChange(of: vm.searchText) { oldValue, newValue in
-           if oldValue.isEmpty && newValue.isEmpty {
-               vm.searchText = ""
-               UIApplication.shared.endEditing()
-              
-            
-           }
-           print(oldValue, newValue)
+           if oldValue != newValue {
+                 Task {
+                     vm.performSearch()
+                 }
+             }
        }
         
     }
@@ -99,7 +97,9 @@ extension HomeView {
                     HomeRowView(experienceModel: item)
                         .onTapGesture {
                             vm.selectedExperimentModel = item
-                            vm.showDetail = true
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                                vm.showDetail = true
+                                }
                     }
                        
                 }
@@ -136,7 +136,9 @@ extension HomeView {
                         .listRowInsets(EdgeInsets())
                         .onTapGesture {
                             vm.selectedExperimentModel = item
-                            vm.showDetail = true
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                                vm.showDetail = true
+                                }
                     }
                 }
                 

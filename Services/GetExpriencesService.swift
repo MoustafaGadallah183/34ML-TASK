@@ -16,7 +16,7 @@ class GetHomeDataService {
 
     var expriencesSubscription: AnyCancellable?
     var recentexpriencesSubscription: AnyCancellable?
-    var detailsSubscription: AnyCancellable?
+    var filteredExperiencesSubscription: AnyCancellable?
 
 
     init()  {
@@ -51,18 +51,18 @@ class GetHomeDataService {
             })
     }
     
-    
-    func getExpriencesDetails(experience:ExperienceModel?) async {
+    func getExpericesWithSearchText(_ searchText: String) async {
         
-        guard let url = URL(string: "https://aroundegypt.34ml.com/api/v2/experiences/\(experience?.id ?? "")") else { return }
+        guard let url = URL(string: "https://aroundegypt.34ml.com/api/v2/experiences?filter[title]=\((searchText))") else { return }
 
-        detailsSubscription = NetworkingManager.download(url: url)
-            .decode(type: ExperienceDetailsResponse.self, decoder: JSONDecoder().with(decodingStrategy: .convertFromSnakeCase))
+        filteredExperiencesSubscription = NetworkingManager.download(url: url)
+            .decode(type: HomeResponse.self, decoder: JSONDecoder().with(decodingStrategy: .convertFromSnakeCase))
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: NetworkingManager.handleCompletion, receiveValue: { [weak self] (returnedExprences) in
-                self?.experirencDetails = returnedExprences.data
-                self?.detailsSubscription?.cancel()
+                self?.recentExpriences = returnedExprences.data ?? []
+                self?.filteredExperiencesSubscription?.cancel()
             })
+        
     }
     
     func addHomeServiceTotaskGroup() async {

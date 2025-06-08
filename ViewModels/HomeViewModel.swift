@@ -25,12 +25,12 @@ class HomeViewModel: ObservableObject {
     
     func addSubscribers() {
         
-        $searchText.combineLatest( homeDataService.$recentExpriences)
-            .map(filterExperiences)
-            .debounce(for: .seconds(0.5), scheduler: DispatchQueue.main)
-               .sink { [weak self] retrurnedCoins in
-                self?.mostRecentExpeirneces = retrurnedCoins
-            }.store(in: &cancelleabels)
+//        $searchText.combineLatest( homeDataService.$recentExpriences)
+//            .map(filterExperiences)
+//            .debounce(for: .seconds(0.5), scheduler: DispatchQueue.main)
+//               .sink { [weak self] retrurnedCoins in
+//                self?.mostRecentExpeirneces = retrurnedCoins
+//            }.store(in: &cancelleabels)
    
         homeDataService.$allExpriences
             .sink { [weak self] (recommendedExpeirneces) in
@@ -46,9 +46,22 @@ class HomeViewModel: ObservableObject {
             }
             .store(in: &cancelleabels)
         
-        
+        $searchText
+              .debounce(for: .milliseconds(400), scheduler: DispatchQueue.main)
+              .removeDuplicates()
+              .sink { [weak self] newValue in
+                  guard let self = self else { return }
+                  self.performSearch()
+              }
+              .store(in: &cancelleabels)
     }
     
+    func performSearch()  {
+        Task {
+           await  homeDataService.getExpericesWithSearchText(searchText)
+
+        }
+    }
     
     private func filterExperiences(searchText: String , coins: [ExperienceModel]) -> [ExperienceModel] {
         

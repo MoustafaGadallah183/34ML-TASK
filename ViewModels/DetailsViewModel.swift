@@ -8,27 +8,30 @@ import Combine
 import Foundation
 
 class HomeDetailsViewModel: ObservableObject {
-    
-    
     @Published var details: ExperienceModel?
-    private var homeDataService = GetHomeDataService()
-    var cancelleabels = Set<AnyCancellable>()
-    var detailsSubscription: AnyCancellable?
-
-
-    func getExpriencesDetails(experience:ExperienceModel?) async {
+    @Published var isLoading: Bool = false
+    
+    private var detailsSubscription: AnyCancellable?
+    
+    func getExperiencesDetails(experience: ExperienceModel?) {
+        guard let experience = experience,
+              let url = URL(string: "https://aroundegypt.34ml.com/api/v2/experiences/\(experience.id ?? "")") else {
+            return
+        }
         
-        guard let url = URL(string: "https://aroundegypt.34ml.com/api/v2/experiences/\(experience?.id ?? "")") else { return }
-
-         detailsSubscription = NetworkingManager.download(url: url)
+        isLoading = true
+        
+        detailsSubscription = NetworkingManager.download(url: url)
             .decode(type: ExperienceDetailsResponse.self, decoder: JSONDecoder().with(decodingStrategy: .convertFromSnakeCase))
             .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: NetworkingManager.handleCompletion, receiveValue: { [weak self] (returnedExprences) in
-                self?.details = returnedExprences.data
+            .sink(receiveCompletion: { [weak self] completion in
+                self?.isLoading = false
+              
+            }, receiveValue: { [weak self] response in
+                self?.details = response.data
                 self?.detailsSubscription?.cancel()
             })
     }
     
- 
     
 }

@@ -51,7 +51,7 @@ struct HomeRowView: View {
         
         }  .sheet(isPresented: $vm.showDetail) {
             if let item = vm.selectedExperimentModel {
-               HomeDetailsView(experienceModel: item)
+            HomeDetailsView( experienceModel: item)
             }
             
         }

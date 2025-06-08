@@ -21,6 +21,7 @@ struct ExperienceModel: Codable ,Identifiable {
     var rating, reviewsNo: Int?
     var audioURL: String?
     var hasAudio: Bool?
+    var city : City?
     
     
     
@@ -32,3 +33,15 @@ struct TicketPrice: Codable {
     var type: String?
     var price: Int?
 }
+
+struct City: Codable {
+    var id: Int?
+    var name: String?
+     
+    var  fullname: String? {
+        return ((name ?? "") + ", Egypt." )
+    }
+
+}
+
+
