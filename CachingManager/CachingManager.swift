@@ -8,6 +8,7 @@
 import Foundation
 
 class ExperienceCacheManager {
+    
     private let recommendedKey = "cachedRecommendedExperiences"
     private let recentKey = "cachedRecentExperiences"
 

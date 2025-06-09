@@ -15,7 +15,6 @@ class HomeViewModel: ObservableObject {
     @Published var mostRecentExpeirneces: [ExperienceModel] = []
     @Published var selectedExperimentModel: ExperienceModel? = nil
     @Published var likesCount: Int = 0
-
     @Published var showDetail = false
     @Published var searchText: String = ""
     
@@ -49,7 +48,6 @@ class HomeViewModel: ObservableObject {
         
         $searchText
             .debounce(for: .milliseconds(400), scheduler: DispatchQueue.main)
-            .removeDuplicates()
             .sink { [weak self] _ in
                 self?.performSearch()
             }
@@ -75,38 +73,44 @@ class HomeViewModel: ObservableObject {
     
     @MainActor
     func likeExperience(_ id: String) async -> Int? {
-        func updateLikes(in array: inout [ExperienceModel]) {
-            if let index = array.firstIndex(where: { $0.id == id }) {
-                array[index].likesNo? += 1
-            }
+        
+        if let index = mostRecentExpeirneces.firstIndex(where: { $0.id == id }) {
+            mostRecentExpeirneces[index].likesNo? += 1
         }
-        updateLikes(in: &mostRecentExpeirneces)
-        updateLikes(in: &recommendedExpeirneces)
+
+        if let index = recommendedExpeirneces.firstIndex(where: { $0.id == id }) {
+            recommendedExpeirneces[index].likesNo? += 1
+        }
+
         if let currentLikes = selectedExperimentModel?.likesNo, selectedExperimentModel?.id == id {
             selectedExperimentModel?.likesNo = currentLikes + 1
         }
-        
+
         ExperienceCacheManager.shared.saveRecommended(recommendedExpeirneces)
         ExperienceCacheManager.shared.saveRecent(mostRecentExpeirneces)
-        
+
         if monitor.currentPath.status != .satisfied {
             PendingLikesManager.shared.add(id)
-            return selectedExperimentModel?.likesNo ??
-                   mostRecentExpeirneces.first(where: { $0.id == id })?.likesNo ??
-                   recommendedExpeirneces.first(where: { $0.id == id })?.likesNo
+            return getLikesCount(for: id)
         }
-        
+
         let success = await homeDataService.likeExperience(id)
         if !success {
             PendingLikesManager.shared.add(id)
         } else {
             PendingLikesManager.shared.remove(id)
         }
-        
+
+        return getLikesCount(for: id)
+    }
+
+    private func getLikesCount(for id: String) -> Int? {
         return selectedExperimentModel?.likesNo ??
                mostRecentExpeirneces.first(where: { $0.id == id })?.likesNo ??
                recommendedExpeirneces.first(where: { $0.id == id })?.likesNo
     }
+
+    
     
     @MainActor
     func syncPendingLikes() async {

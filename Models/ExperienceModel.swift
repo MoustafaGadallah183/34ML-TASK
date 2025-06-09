@@ -5,12 +5,10 @@
 //  Created by Moustafa Mohamed Gadallah on 11/12/1446 AH.
 //
 
-
-
-
 import Foundation
 
 // MARK: - ExperienceModel
+
 struct ExperienceModel: Codable ,Identifiable , Equatable {
    
     var id, title: String?
@@ -32,6 +30,7 @@ struct ExperienceModel: Codable ,Identifiable , Equatable {
 }
 
 // MARK: - TicketPrice
+
 struct TicketPrice: Codable , Equatable {
     var type: String?
     var price: Int?

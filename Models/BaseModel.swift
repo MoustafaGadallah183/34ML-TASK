@@ -18,13 +18,11 @@ struct ExperienceDetailsResponse: Codable {
     var data: ExperienceModel?
    
 }
+
+
 struct Meta: Codable {
     var code: Int?
 
-    
 }
 
-// MARK: - Pagination
-struct Pagination: Codable {
-    
-}
+
