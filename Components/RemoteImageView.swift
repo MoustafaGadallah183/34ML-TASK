@@ -25,9 +25,6 @@ struct RemoteImageView: View {
                 .resizable()
                 .aspectRatio(contentMode: contentMode)
                 .frame(maxWidth: .infinity)
-                .ifLet(height) { view, height in
-                    view.frame(height: height)
-                }
                 .clipped()
                 .cornerRadius(cornerRadius)
          
